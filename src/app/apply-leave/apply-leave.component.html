@@ -1,0 +1,267 @@
+
+<div class="col-xl-9 col-lg-8 col-md-12 align-center">
+							
+    <div class="row ">
+      <div class="col-md-12">
+        <div class="card ctm-border-radius shadow-sm grow">
+          <div class="card-header">
+            <h3 class="card-title mb-0"><b>Leave Page</b></h3>
+          </div>
+          <div class="card-body">
+            <form #leave="ngForm">
+
+              
+              {{leave.value |json}}
+              <!--Employee name-->
+              <div class="row">
+                <div class="col-sm-8 leave-col">
+                  <div class="form-group">
+                    <label>Employee Name</label>
+                    <span class="text-danger"> *</span>
+                    <input type="text" class="form-control" value="Deepak Kumar Yadav" disabled name="ename" >
+                  </div>
+                </div>
+              </div>
+              <!--Employee name-->
+
+              <!--Employee code-->
+              <div class="row">
+                <div class="col-sm-8 leave-col">
+                  <div class="form-group">
+                    <label>Employee Code</label>
+                    <span class="text-danger"> *</span>
+                    <input type="text" class="form-control" value="278" disabled name="ecode">
+                  </div>
+                </div>
+              </div>
+              <!--Employee code-->
+
+              <!--Leave Category-->
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label>
+                      Leave Category
+                      <span class="text-danger"> *</span>
+                    </label>
+                    <select (blur)="validatecategory(category.value)" (change)="validatecategory(category.value)" 
+                            class="form-control custom-select" 
+                            name="category" 
+                            ngModel 
+                            #category="ngModel"
+                            [class.is-invalid]="category.invalid && category.touched">
+                      <option value="default">Select Leave Type</option>
+                      <option>Working From Home</option>
+                      <option>Short Leave</option>
+                      <option>On Duty(OD)</option>
+                      <option>Annual Leave</option>
+                      <option>Casual Leave</option>
+                      <option>Earned Leave</option>
+                    </select>
+                    <small class="text-danger" [class.d-none]="!categoryhaserror||category.untouched">Select a category </small>
+                    
+                  </div>
+                </div>
+                
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label><input class="form-control" type="checkbox" value="" name="sandwich" ngModel #sandwich="ngModel">Is Sandwich Leave</label>
+                  </div>
+                </div>
+              </div>
+              
+              <!--/Leave Category-->
+              
+              <!--purpose-->
+              <div class="row">
+                <div class="col-sm-8">
+                  <div class="form-group mb-0">
+                    <label>Purpose</label>
+                    <span class="text-danger"> *</span>
+                    <textarea (blur)="validatepurpose(purpose.value)" (change)="validatepurpose(purpose.value)" 
+                              class="form-control" 
+                              rows=4 
+                              name="purpose" 
+                              ngModel 
+                              #purpose="ngModel">
+                    </textarea>
+                  </div>
+                    <small class="text-danger" [class.d-none]="!purposehaserror||purpose.untouched">Purpose can't be blank</small>
+                </div>
+              </div>
+              <!--purpose-->
+              
+              <!--Addresh of Contact-->
+              <div class="row">
+                <div class="col-sm-8">
+                  <div class="form-group mb-0">
+                    <label>Addresh Of Contact</label>
+                    <span class="text-danger"> *</span>
+                    <textarea (blur)="validateaddresh(addresh.value)" (change)="validateaddresh(addresh.value)"
+                              class="form-control" 
+                              rows=4 
+                              name="address" 
+                              ngModel 
+                              #addresh="ngModel">
+                    </textarea>
+                    <small class="text-danger" [class.d-none]="!addreshhaserror||addresh.untouched">Purpose can't be blank</small>
+                  </div>
+                </div>
+              </div>
+              <!--Addresh of Contact-->
+              <!--Contact Number-->
+              <div class="row">
+                <div class="col-sm-8 leave-col">
+                  <div class="form-group">
+                    <label>Contact Number</label>
+                    <span class="text-danger"> *</span>
+                    <input (blur)="validatecontact(contact.value)" (change)="validatecontact(contact.value)" 
+                            type="text" 
+                            class="form-control" 
+                            value="7398806070" 
+                            name="contact" 
+                            ngModel 
+                            #contact="ngModel">
+                            <small class="text-danger" [class.d-none]="!contacthaserror||contact.untouched">Please enter a valid phone Number</small>
+                  </div>
+                </div>
+              </div>
+              <!--/Contact Number-->
+              
+              <!--From and to-->
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label>From</label>
+                    <span class="text-danger"> *</span>
+                    <input type="text" class="form-control datetimepicker" id="datetimepicker3" name="datefrom " ngModel>
+                  </div>
+                </div>
+                
+                <div class="col-sm-4 leave-col">
+                  <div class="form-group">
+                    <label>To</label>
+                    <span class="text-danger"> *</span>
+                    <input type="text" class="form-control datetimepicker" name="dateto" ngModel>
+                  </div>
+                </div>
+                <div class="col-sm-4 leave-col">
+                  <div class="form-group" *ngIf="!categoryhaserror">
+                    <b>Note:</b>
+                    <div *ngIf="catone">Maximum leave range for <b>Working From Home</b>, can be 3 days.</div>
+                    <div *ngIf="cattwo">Maximum leave range for <b>Short Leave</b>, is 2 hours same day.</div>
+                    <div *ngIf="catthree">Maximum leave range for <b>On Duety(OD)</b>,can be ? days.</div>
+                    <div *ngIf="catfour">Minimum leave range for <b>Annual Leave</b>,can be 3 days..</div>
+                    <div *ngIf="catfive">Maximum leave range for <b>Casual Leave</b>,can be 3 days.</div>
+                    <div *ngIf="catsix">Maximum leave range for <b>Earned Leave</b>,can be 3 days.</div>
+                  </div>
+                </div>
+              </div>
+              <!--/From and to-->
+              <!--Full Or Half-->
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label>
+                    Leave Type
+                    <span class="text-danger"> *</span>
+                    </label>
+                    <select class="form-control select"
+                    (blur)="validateleavefromtype(fromtype.value)" (change)="validateleavefromtype(fromtype.value)"
+                      name="fromtype" 
+                      #fromtype="ngModel"
+                     ngModel >
+                      <option value="default">Select</option>
+                      <option>Half</option>
+                      <option>Full</option>
+                    </select>
+                    <small class="text-danger" [class.d-none]="!leavefromtypehaserror||fromtype.untouched">Please choose a leave type</small>
+                  </div>
+                </div>
+
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label>
+                    Leave Type
+                    <span class="text-danger"> *</span>
+                    </label>
+                    <select class="form-control select"
+                            (blur)="validateleavetotype(totype.value)" (change)="validateleavetotype(totype.value)" 
+                            name="totype"
+                            #totype="ngModel"
+                            ngModel>
+                      <option value="default">Select</option>
+                      <option>Half</option>
+                      <option>Full</option>
+                    </select>
+                    
+                    <small class="text-danger" [class.d-none]="!leavetotypehaserror||totype.untouched">Please choose a leave type</small>
+                  </div>
+                </div>
+              </div>
+                <!--Full Or Half-->
+                <!--Leave counter-->
+              <div class="row">
+                <div class="col-sm-8 leave-col">
+                  <div class="form-group">
+                    <label>Number of Days Leave</label>
+                    <input type="text" class="form-control" value="2" disabled name="leavecount">
+                  </div>
+                </div>
+              </div>
+              <!--Leave Counter-->
+
+              <!--Approver-->
+              <div class="row">
+                <div class="col-sm-8">
+                  <div class="form-group">
+                    <label>
+                      Approver
+                      <span class="text-danger"> *</span>
+                    </label>
+                    <select class="form-control select"
+                            (blur)="validateapprover(approver.value)" (change)="validateapprover(approver.value)" 
+                            #approver="ngModel"
+                            name="approver" 
+                            ngModel>
+                      <option value="default">Select Leave</option>
+                      <option>Atif Ali Khan</option>
+                      <option>Naval Kishore</option>
+                      <option>Vipul Dimri</option>
+                    </select>
+                    <small class="text-danger" [class.d-none]="!approverhaserror||approver.untouched">Please choose a approver</small>
+                  </div>
+                </div>
+              </div>
+              <!--Approver-->
+
+              <!--Status-->
+              <div class="row">
+                <div class="col-sm-8">
+                  <div class="form-group">
+                    <label>
+                      Status
+                      <span class="text-danger"> *</span>
+                    </label>
+                    <select class="form-control select" 
+                            (blur)="validatestatus(status.value)" (change)="validatestatus(status.value)"
+                            #status="ngModel"
+                            name="status" 
+                            ngModel>
+                      <option value="default">Select Status</option>
+                      <option>To Be Approved</option>
+                    </select>
+                    <small class="text-danger" [class.d-none]="!statushaserror||status.untouched">Please choose status</small>
+                  </div>
+                </div>
+              </div>
+              <!--Status-->
+              <div class="text-center">
+                <a href="javascript:void(0);" class="btn button-1 text-white ctm-border-radius mt-4">Apply</a>
+                <a href="javascript:void(0);" class="btn btn-danger text-white ctm-border-radius mt-4">Cancel</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+</div>
